@@ -315,10 +315,10 @@ func fullDuplexTwoStreams() {
 	go sendLocalToRemoteIdx(strLocalIdx)
 	go sendRemoteToLocal()
 
-	time.Sleep(8e9)
+	time.Sleep(8 * time.Second)
 
 	stop = true
-	time.Sleep(30e6) // allow  the sender to drain
+	time.Sleep(2 * time.Second) // allow  the sender to drain
 
 	stopRemoteRecv <- true
 	stopLocalRecv <- true
@@ -328,7 +328,7 @@ func fullDuplexTwoStreams() {
 	rsLocal.CloseSession()
 	rsRemote.CloseSession()
 
-	time.Sleep(10e6)
+	time.Sleep(10 * time.Second)
 
 	fmt.Printf("Full duplex test with 2 output streams done.")
 }
@@ -374,10 +374,10 @@ func simpleRtp() {
 	go sendLocalToRemote()
 	go sendRemoteToLocal()
 
-	time.Sleep(8e9)
+	time.Sleep(8 * time.Second)
 
 	stop = true
-	time.Sleep(30e6) // allow the sender to drain
+	time.Sleep(3 * time.Second) // allow the sender to drain
 
 	stopRemoteRecv <- true
 	stopLocalRecv <- true
@@ -387,8 +387,6 @@ func simpleRtp() {
 	// Just close the receivers, no need to close a session.
 	rsLocal.CloseRecv()
 	rsRemote.CloseRecv()
-
-	time.Sleep(10e6)
 
 	fmt.Printf("Simple RTP test done.")
 

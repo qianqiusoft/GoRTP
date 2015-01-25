@@ -21,7 +21,6 @@ package rtp
 import (
 	"fmt"
 	"net"
-	"time"
 )
 
 // RtpTransportUDP implements the interfaces RtpTransportRecv and RtpTransportWrite for RTP transports.
@@ -102,11 +101,11 @@ func (tp *TransportUDP) CloseRecv() {
 	tp.dataRecvStop = true
 	tp.ctrlRecvStop = true
 
-	err := tp.rtpConn.Close()
+	err := tp.ctrlConn.Close()
 	if err != nil {
-		fmt.Printf("Close failed: %s\n", err.String())
+		fmt.Printf("Close failed: %s\n", err)
 	}
-	tp.rtcpConn.Close()
+	tp.ctrlConn.Close()
 }
 
 // setEndChannel receives and set the channel to signal back after network socket was closed and receive loop terminated.
